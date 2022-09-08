@@ -10,13 +10,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexstyl.contactstore.ContactStore
 import com.alien.location.databinding.ActivityContactsBinding
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class ContactsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityContactsBinding
 
-    private lateinit var contactAdapter: ContactAdapter
+    lateinit var contactAdapter: ContactAdapter
 
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityContactsBinding.inflate(layoutInflater)
@@ -30,6 +35,14 @@ class ContactsActivity : AppCompatActivity() {
         store.fetchContacts()
             .collect { contacts ->
                 Log.d("alien","$contacts")
+
+                GlobalScope.launch(Dispatchers.Main) {
+                    contactAdapter = ContactAdapter(contacts)
+                    val layoutManager = LinearLayoutManager(this@ContactsActivity)
+                    binding.rvContactRv.adapter = contactAdapter
+                    binding.rvContactRv.layoutManager = layoutManager
+                }
+
 
 
             }
