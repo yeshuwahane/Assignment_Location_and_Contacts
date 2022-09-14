@@ -37,7 +37,7 @@ class ContactAdapter(private val dataSet: List<Contact>) :
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.binding.tvContactName.text = dataSet[position].displayName
-//        viewHolder.binding.tvContactNumber.text = dataSet[position].phones[position].toString()
+//        viewHolder.binding.tvContactNumber.text = dataSet[position].
     }
 
     // Return the size of your dataset (invoked by the layout manager)

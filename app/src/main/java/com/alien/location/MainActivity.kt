@@ -7,11 +7,13 @@ import android.location.Location
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.provider.Settings
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import com.alexstyl.contactstore.Contact
 import com.alien.location.databinding.ActivityMainBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -37,8 +39,23 @@ class MainActivity : AppCompatActivity() {
         getCurrentLocation()
 
         binding.btnContacts.setOnClickListener {
-            val intent = Intent(this,ContactsActivity::class.java)
-            startActivity(intent)
+
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.READ_CONTACTS
+            ) == PackageManager.PERMISSION_GRANTED){
+                val intent = Intent(this,ContactsActivity::class.java)
+                startActivity(intent)
+            }else{
+                Toast.makeText(
+                    this,
+                    "Enable Read Contact Permission from app setting ",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+
+
         }
 
     }

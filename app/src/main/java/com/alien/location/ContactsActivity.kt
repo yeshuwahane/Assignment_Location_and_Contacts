@@ -30,6 +30,7 @@ class ContactsActivity : AppCompatActivity() {
 
 
 
+
         val store = ContactStore.newInstance(application)
 
         store.fetchContacts()
